@@ -38,7 +38,7 @@ public class ECDSA {
         return fromJacobian(jacobianAdd(toJacobian(p), toJacobian(q), this.curve.A, this.curve.P), this.curve.P);
     }
 
-    public Signature sign(String message) throws NoSuchAlgorithmException {
+    public Signature sign(String message) {
         byte[] hashMessage = hashfunc.digest(message.getBytes());
         BigInteger numberMessage = BinaryAscii.numberFromString(hashMessage);
         BigInteger q = this.curve.N;
@@ -51,23 +51,22 @@ public class ECDSA {
         return new Signature(r, s);
     }
 
-    public boolean verify(String message, Signature signature) throws NoSuchAlgorithmException {
+    public boolean verify(String message, Signature signature) {
         byte[] hashMessage = hashfunc.digest(message.getBytes());
         BigInteger numberMessage = BinaryAscii.numberFromString(hashMessage);
-        Point G = this.curve.G;
         Curve curve = this.publicKey.curve;
-        BigInteger q = this.curve.N;
+        Point G = curve.G;
+        BigInteger q = curve.N;
         BigInteger r = signature.r;
         BigInteger s = signature.s;
 
         BigInteger w = s.modInverse(q);
-
         BigInteger u1 = w.multiply(numberMessage).mod(q);
         BigInteger u2 = w.multiply(r).mod(q);
 
-
-        Point u1G = this.multiply(curve.G, u1);
+        Point u1G = this.multiply(G, u1);
         Point u2B = this.multiply(this.publicKey.point, u2);
+
 
         Point P = add(u1G, u2B);
         return r.equals(P.x.mod(q));
