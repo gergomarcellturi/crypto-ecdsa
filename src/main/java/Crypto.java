@@ -9,6 +9,9 @@ public class Crypto {
         ECDSA ecdsa = new ECDSA();
 
         Signature signature = ecdsa.sign("Hello World");
-        ecdsa.verify("Hello World", signature);
+        System.out.println(ecdsa.verify("Hello World", signature));
+        System.out.println(ecdsa.verify("Hello Worfld", signature));
+        System.out.println(ecdsa.verify("Hello World", signature));
+
     }
 }
