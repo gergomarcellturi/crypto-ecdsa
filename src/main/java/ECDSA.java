@@ -41,6 +41,7 @@ public class ECDSA {
     public Signature sign(String message) {
         byte[] hashMessage = hashfunc.digest(message.getBytes());
         BigInteger numberMessage = BinaryAscii.numberFromString(hashMessage);
+        System.out.println(numberMessage.toString(16));
         BigInteger q = this.curve.N;
         Point G = this.curve.G;
 
