@@ -1,6 +1,3 @@
-import com.starkbank.ellipticcurve.PrivateKey;
-import com.starkbank.ellipticcurve.PublicKey;
-
 
 public class Crypto {
 

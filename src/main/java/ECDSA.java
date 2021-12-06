@@ -1,4 +1,7 @@
-import com.starkbank.ellipticcurve.*;
+import com.starkbank.ellipticcurve.PrivateKey;
+import com.starkbank.ellipticcurve.PublicKey;
+import com.starkbank.ellipticcurve.Curve;
+import com.starkbank.ellipticcurve.Point;
 import com.starkbank.ellipticcurve.Math;
 import com.starkbank.ellipticcurve.utils.BinaryAscii;
 import com.starkbank.ellipticcurve.utils.RandomInteger;
@@ -48,7 +51,7 @@ public class ECDSA {
         BigInteger randNum = RandomInteger.between(BigInteger.ONE, q); // kE
         Point R = multiply(G, randNum);
         BigInteger r = R.x;
-        BigInteger s = ((numberMessage.add(privateKey.secret.multiply(r))).multiply(randNum.modInverse(q))).mod(q);
+        BigInteger s = ((numberMessage.add(privateKey.secret.multiply(r))).multiply(randNum.modInverse(q)));
         return new Signature(r, s);
     }
 
